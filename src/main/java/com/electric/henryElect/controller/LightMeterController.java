@@ -15,7 +15,7 @@ public class LightMeterController {
     private LightMeterService lightMeterService;
 
     @GetMapping("/{id}")
-    public LightMeter getLightMeterByID(@RequestParam Integer id){
+    public LightMeter getLightMeterByID(@PathVariable Integer id){
         return lightMeterService.getLightMeter(id);
     }
 
@@ -34,6 +34,12 @@ public class LightMeterController {
     public String editLightMeter(@RequestBody LightMeter medidor){
         LightMeter modifyLightMeter = lightMeterService.editLightMeter(medidor);
         return ("Medidor " + modifyLightMeter + " ha sido modificado.");
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteLightMeter(@PathVariable Integer id){
+        lightMeterService.deleteLightMeter(id);
+        return ("Medidor con el id " + id + " ha sido borrado.");
     }
 
 }

@@ -18,4 +18,11 @@ public class LightMeterService {
                 .orElseThrow(()-> new HttpClientErrorException(HttpStatus.NOT_FOUND));
     }
 
+    public LightMeter addLightMeter(LightMeter medidor){
+        return lightMeterRepository.save(medidor);
+    }
+
+    public LightMeter editLightMeter(LightMeter medidor) {
+
+    }
 }

@@ -7,6 +7,8 @@ import com.electric.henryElect.services.LightMeterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 @RequestMapping("/address")
 public class AddressController {
@@ -20,11 +22,17 @@ public class AddressController {
         this.lightMeterService = lightMeterService;
     }
 
+//    @GetMapping("/{id}")
+//    public Address getAddress(@PathVariable Integer id){
+//        LightMeter lightMeter = lightMeterService.getLightMeter(id);
+//        return addressService.getAddressByLightMeter(lightMeter);
+//    }
+
     @GetMapping("/{id}")
     public Address getAddress(@PathVariable Integer id){
-        LightMeter lightMeter = lightMeterService.getLightMeter(id);
-        return addressService.getAddressByLightMeter(lightMeter);
+        return addressService.getAddressByID(id);
     }
+
 
     @PostMapping
     public String postAddress(@RequestBody Address direccion){
@@ -41,9 +49,8 @@ public class AddressController {
 
     @DeleteMapping("/{id}")
     public String delAddress(@PathVariable Integer id){
-        LightMeter lightMeter = lightMeterService.getLightMeter(id);
-        addressService.deleteAddressByLightMeter(lightMeter);
-        return ("Dirección con medidor " + lightMeter + " ha sido eliminada.");
+        addressService.deleteAddressByID(id);
+        return ("Dirección con id " + id + " ha sido eliminada.");
     }
 
 }

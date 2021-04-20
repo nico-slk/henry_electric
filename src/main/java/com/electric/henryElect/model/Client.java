@@ -17,9 +17,12 @@ public abstract class Client implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer dni;
     private Address address;
-    private List<LightMeter> lightMeter;
     private Invoice invoice;
     private String name;
     private String lastName;
+
+    @ElementCollection()
+    private List<LightMeter> lightMeter;
+
 
 }

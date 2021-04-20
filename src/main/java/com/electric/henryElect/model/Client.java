@@ -24,6 +24,6 @@ public class Client {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "Invoices")
-    private Invoice invoice;
+    private List<Invoice> invoice;
 
 }

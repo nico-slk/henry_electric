@@ -13,16 +13,19 @@ public class AddressService {
     @Autowired
     private AddressRepository addressRepository;
 
+// POR ADDRESSTWO
+
+
+
+
+// POR ID
     public Address getAddressByID(Integer id) {
         return addressRepository.findById(id)
                 .orElseThrow(()-> new HttpClientErrorException(HttpStatus.NOT_FOUND));
     }
-
-
     public Address addAddress(Address direccion) {
         return addressRepository.save(direccion);
     }
-
     public Address editAddress(Address direccion) {
         Address address = addressRepository.findById(direccion.getId())
                 .orElseThrow(()-> new HttpClientErrorException(HttpStatus.NOT_FOUND));
@@ -48,8 +51,8 @@ public class AddressService {
 
         return addressRepository.save(newAddress);
     }
-
     public void deleteAddressByID(Integer id) {
         addressRepository.deleteById(id);
     }
+
 }

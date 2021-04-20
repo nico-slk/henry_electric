@@ -4,20 +4,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
 
 @Data
 @NoArgsConstructor
 @Entity
-public class Address {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Person implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String street;
-    private String number;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "light_meter")
-    private LightMeter lightMeter;
+    @JoinColumn(name = "client")
+    private Client client;
 
 }

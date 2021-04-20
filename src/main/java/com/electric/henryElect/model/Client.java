@@ -10,16 +10,20 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Client implements Serializable {
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer dni;
     private Address address;
-    private List<LightMeter> lightMeter;
-    private Invoice invoice;
     private String name;
     private String lastName;
+
+    @ElementCollection()
+    private List<LightMeter> lightMeter;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "Invoices")
+    private List<Invoice> invoice;
 
 }

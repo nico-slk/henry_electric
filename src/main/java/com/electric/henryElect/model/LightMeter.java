@@ -21,8 +21,8 @@ public class LightMeter {
     private String model;
     private String brand;
 
-    private Integer initialMedition; //Medición inicial
-    private Integer finalMedition; //Medición final
-    private Integer totalConsumption; //Consumo total en Kwh
+    private Double initialMedition; //Medición inicial
+    private Double finalMedition; //Medición final
+    private Double totalConsumption; //Consumo total en Kwh
 
 }

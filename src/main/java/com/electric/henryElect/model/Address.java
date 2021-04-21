@@ -19,7 +19,7 @@ public class Address {
     private String street;
     private String number;
 
-    @OneToOne(fetch = FetchType.EAGER)
+//    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "lightMeter_id")
     private Integer lightMeterId;
 
@@ -27,7 +27,7 @@ public class Address {
 //    @JoinColumn(name = "light_meter")
 //    private LightMeter lightMeter;
 
-    @OneToOne(fetch = FetchType.EAGER)
+//    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Integer clientId;
 

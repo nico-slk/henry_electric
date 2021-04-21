@@ -4,13 +4,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Client {
+public class Client implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,15 +20,15 @@ public class Client {
     private String name;
     private String lastName;
 
-    @OneToMany(fetch = FetchType.EAGER)
+
+    @ElementCollection(fetch = FetchType.EAGER)
     @JoinColumn(name = "lightMeter_id")
     private List<Integer> lightMeterId;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = Invoice.class)
     @JoinColumn(name = "Invoices_id")
     private List<Integer> invoiceId;
 
-    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Integer addressid;
 

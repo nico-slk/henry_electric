@@ -21,7 +21,7 @@ public class LightMeter {
     private Double finalMedition; //Medición final
     private Double totalConsumption; //Consumo total en Kwh
 
-    @OneToOne(fetch = FetchType.EAGER)
+//    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id")
     private Integer addressid;
 

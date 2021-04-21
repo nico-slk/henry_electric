@@ -17,7 +17,7 @@ public abstract class Person implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(targetEntity=Client.class, fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+//    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client")
     private Client client;
 

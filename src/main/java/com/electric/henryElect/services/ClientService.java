@@ -30,9 +30,15 @@ public class ClientService {
     }
 
     public Client editClient(Client fulano) {
-        Client client = clientRepository.findById(fulano.getDni())
+        Client client = clientRepository.findById(fulano.getId())
                 .orElseThrow(()-> new HttpClientErrorException(HttpStatus.NOT_FOUND));
         Client newClient = new Client();
+        if(fulano.getDni() != null){
+            newClient.setDni(fulano.getDni());
+        } else {
+            newClient.setDni(client.getDni());
+        }
+
         if(fulano.getName() != null){
             newClient.setName(fulano.getName());
         } else {

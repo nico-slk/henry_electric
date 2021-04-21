@@ -49,6 +49,12 @@ public class AddressService {
             newAddress.setLightMeter(address.getLightMeter());
         }
 
+        if(direccion.getClient() != null){
+            newAddress.setClient(direccion.getClient());
+        } else {
+            newAddress.setClient(address.getClient());
+        }
+
         return addressRepository.save(newAddress);
     }
     public void deleteAddressByID(Integer id) {

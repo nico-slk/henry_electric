@@ -10,20 +10,25 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private Integer dni;
-    private Address address;
     private String name;
     private String lastName;
 
     @ElementCollection()
     private List<LightMeter> lightMeter;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(targetEntity=Invoice.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "Invoices")
     private List<Invoice> invoice;
+
+    @OneToOne(targetEntity=Address.class, fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinColumn(name = "address")
+    private Address address;
 
 }

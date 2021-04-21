@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -62,6 +63,12 @@ public class InvoiceService {
             newInvoice.setPay(factura.getPay());
         } else {
             newInvoice.setPay(invoice.getPay());
+        }
+
+        if(factura.getClient() != null){
+            newInvoice.setClient(factura.getClient());
+        } else {
+            newInvoice.setClient(invoice.getClient());
         }
 
         return invoiceRepository.save(newInvoice);

@@ -1,11 +1,10 @@
 package com.electric.henryElect.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -22,8 +21,8 @@ public class LightMeter {
     private Double finalMedition; //Medición final
     private Double totalConsumption; //Consumo total en Kwh
 
-    @OneToOne(targetEntity=Address.class, fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    @JoinColumn(name = "address")
-    private Address address;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "address_id")
+    private Integer addressid;
 
 }

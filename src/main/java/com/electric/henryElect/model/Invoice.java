@@ -23,7 +23,7 @@ public class Invoice{
     private Double total; //Total a pagar (Consumo * Tarifa)
     private Boolean pay;
 
-    @ManyToOne(targetEntity=Client.class, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client")
     private Client client;
 

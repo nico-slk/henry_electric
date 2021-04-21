@@ -13,19 +13,16 @@ public class AddressService {
     @Autowired
     private AddressRepository addressRepository;
 
-// POR ADDRESSTWO
-
-
-
-
 // POR ID
     public Address getAddressByID(Integer id) {
         return addressRepository.findById(id)
                 .orElseThrow(()-> new HttpClientErrorException(HttpStatus.NOT_FOUND));
     }
+
     public Address addAddress(Address direccion) {
         return addressRepository.save(direccion);
     }
+
     public Address editAddress(Address direccion) {
         Address address = addressRepository.findById(direccion.getId())
                 .orElseThrow(()-> new HttpClientErrorException(HttpStatus.NOT_FOUND));
@@ -43,16 +40,16 @@ public class AddressService {
             newAddress.setStreet(address.getStreet());
         }
 
-        if(direccion.getLightMeter() != null){
-            newAddress.setLightMeter(direccion.getLightMeter());
+        if(direccion.getLightMeterId() != null){
+            newAddress.setLightMeterId(direccion.getLightMeterId());
         } else {
-            newAddress.setLightMeter(address.getLightMeter());
+            newAddress.setLightMeterId(address.getLightMeterId());
         }
 
-        if(direccion.getClient() != null){
-            newAddress.setClient(direccion.getClient());
+        if(direccion.getClientId() != null){
+            newAddress.setClientId(direccion.getClientId());
         } else {
-            newAddress.setClient(address.getClient());
+            newAddress.setClientId(address.getClientId());
         }
 
         return addressRepository.save(newAddress);

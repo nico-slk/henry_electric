@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Data
@@ -20,15 +19,20 @@ public class Client {
     private String name;
     private String lastName;
 
-    @ElementCollection()
-    private List<LightMeter> lightMeter;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "lightMeter_id")
+    private List<Integer> lightMeterId;
 
-    @OneToMany(targetEntity=Invoice.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "Invoices")
-    private List<Invoice> invoice;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "Invoices_id")
+    private List<Integer> invoiceId;
 
-    @OneToOne(targetEntity=Address.class, fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    @JoinColumn(name = "address")
-    private Address address;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "address_id")
+    private Integer addressid;
+
+//    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+//    @JoinColumn(name = "address_id")
+//    private List<Integer> addressid;
 
 }

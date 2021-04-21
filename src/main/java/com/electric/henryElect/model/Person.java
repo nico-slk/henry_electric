@@ -14,9 +14,10 @@ import java.io.Serializable;
 public abstract class Person implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+//    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client")
     private Client client;
 

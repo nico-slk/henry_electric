@@ -10,20 +10,30 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-public class Client {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class Client implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private Integer dni;
-    private Address address;
     private String name;
     private String lastName;
 
-    @ElementCollection()
-    private List<LightMeter> lightMeter;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "Invoices")
-    private List<Invoice> invoice;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinColumn(name = "lightMeter_id")
+    private List<Integer> lightMeterId;
+
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = Invoice.class)
+    @JoinColumn(name = "Invoices_id")
+    private List<Integer> invoiceId;
+
+    @JoinColumn(name = "address_id")
+    private Integer addressid;
+
+//    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+//    @JoinColumn(name = "address_id")
+//    private List<Integer> addressid;
 
 }

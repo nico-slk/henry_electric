@@ -3,7 +3,6 @@ package com.electric.henryElect.controller;
 import com.electric.henryElect.model.Invoice;
 import com.electric.henryElect.services.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

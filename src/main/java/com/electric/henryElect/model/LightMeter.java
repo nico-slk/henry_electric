@@ -1,18 +1,15 @@
 package com.electric.henryElect.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @Entity
-@EqualsAndHashCode()
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class LightMeter {
 
     @Id
@@ -20,9 +17,12 @@ public class LightMeter {
     private Integer id;
     private String model;
     private String brand;
-
     private Double initialMedition; //Medición inicial
     private Double finalMedition; //Medición final
     private Double totalConsumption; //Consumo total en Kwh
+
+//    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "address_id")
+    private Integer addressid;
 
 }

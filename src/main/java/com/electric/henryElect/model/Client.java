@@ -2,6 +2,7 @@ package com.electric.henryElect.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,20 +21,7 @@ public class Client implements Serializable {
     private String name;
     private String lastName;
 
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinColumn(name = "lightMeter_id")
-    private List<Integer> lightMeterId;
-
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = Invoice.class)
-    @JoinColumn(name = "Invoices_id")
-    private List<Integer> invoiceId;
-
-    @JoinColumn(name = "address_id")
-    private Integer addressid;
-
-//    @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-//    @JoinColumn(name = "address_id")
-//    private List<Integer> addressid;
-
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "invoices")
+    private List<Invoice> invoices;
 }

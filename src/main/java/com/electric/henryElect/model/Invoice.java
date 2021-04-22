@@ -1,10 +1,10 @@
 package com.electric.henryElect.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Invoice{
+public class Invoice implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +22,5 @@ public class Invoice{
     private Double rate; //Tipo de tarifa
     private Double total; //Total a pagar (Consumo * Tarifa)
     private Boolean pay;
-
-
-//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Client.class)
-    @JoinColumn(name = "client")
-    private Client client;
 
 }

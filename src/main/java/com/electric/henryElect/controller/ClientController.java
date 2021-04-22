@@ -1,9 +1,7 @@
 package com.electric.henryElect.controller;
 
 import com.electric.henryElect.model.Client;
-import com.electric.henryElect.model.LightMeter;
 import com.electric.henryElect.services.ClientService;
-import com.electric.henryElect.services.LightMeterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,25 +24,9 @@ public class ClientController {
         return clientService.getAllClients();
     }
 
-    // Acá agregamos el ID del medidor al cliente y al medidor le seteamos el ID del cliente
-    @PostMapping("/{id}/lightmeter/{lightmeterid}")
-    public String postLightMeterToClient(@PathVariable Integer id, @PathVariable Integer lightmeterid){
-        clientService.addLightMeterToClient(id, lightmeterid);
-        return ("Medidor con id " + lightmeterid + " ha sido agregado en el cliente con id " + id);
-    }
-
-    // Acá agregamos el ID de la factura al cliente y a factura le seteamos el cliente
     @PostMapping("/{id}/invoice/{invoiceId}")
-    public String postInvoiceToClient(@PathVariable Integer id, @PathVariable Integer invoiceid){
-        clientService.addInvoiceToClient(id, invoiceid);
-        return ("Factura con id " + invoiceid + " ha sido agregado en el cliente con id " + id);
-    }
-
-    // Acá agregamos el ID del domicilio y a domicilio le seteamos el ID del cliente
-    @PostMapping("/{id}/address/{addressId}")
-    public String postAddressToClient(@PathVariable Integer id, @PathVariable Integer addressId){
-        clientService.addAddressToClient(id, addressId);
-        return ("Dirección con id " + addressId + " ha sido agregado en el cliente con id " + id);
+    public void addInvoiceToClient(@PathVariable Integer id, @PathVariable Integer invoiceId){
+        clientService.addInvoiceToClient(id, invoiceId);
     }
 
     @PostMapping

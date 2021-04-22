@@ -1,9 +1,7 @@
 package com.electric.henryElect.services;
 
-import com.electric.henryElect.model.Address;
 import com.electric.henryElect.model.Client;
 import com.electric.henryElect.model.Invoice;
-import com.electric.henryElect.model.LightMeter;
 import com.electric.henryElect.repository.AddressRepository;
 import com.electric.henryElect.repository.ClientRepository;
 import com.electric.henryElect.repository.InvoiceRepository;
@@ -20,16 +18,12 @@ public class ClientService {
 
 
     private ClientRepository clientRepository;
-    private LightMeterRepository lightMeterRepository;
-    private InvoiceRepository invoiceRepository;
-    private AddressRepository addressRepository;
+    private InvoiceService invoiceService;
 
     @Autowired
-    public ClientService(ClientRepository clientRepository, LightMeterRepository lightMeterRepository, InvoiceRepository invoiceRepository, AddressRepository addressRepository) {
+    public ClientService(ClientRepository clientRepository, InvoiceService invoiceService) {
         this.clientRepository = clientRepository;
-        this.lightMeterRepository = lightMeterRepository;
-        this.invoiceRepository = invoiceRepository;
-        this.addressRepository = addressRepository;
+        this.invoiceService = invoiceService;
     }
 
     public Client getClientByID(Integer id) {
@@ -67,24 +61,6 @@ public class ClientService {
             newClient.setLastName(client.getLastName());
         }
 
-        if(fulano.getAddressid() != null){
-            newClient.setAddressid(fulano.getAddressid());
-        } else {
-            newClient.setAddressid(client.getAddressid());
-        }
-
-        if(fulano.getInvoiceId() != null){
-            newClient.setInvoiceId(fulano.getInvoiceId());
-        } else {
-            newClient.setInvoiceId(client.getInvoiceId());
-        }
-
-        if(fulano.getLightMeterId() != null){
-            newClient.setLightMeterId(fulano.getLightMeterId());
-        } else {
-            newClient.setLightMeterId(client.getLightMeterId());
-        }
-
         return clientRepository.save(newClient);
     }
 
@@ -92,30 +68,14 @@ public class ClientService {
         clientRepository.deleteById(id);
     }
 
-    public void addLightMeterToClient(Integer id, Integer lightmeterid) {
-        LightMeter lightMeter = lightMeterRepository.findById(lightmeterid)
-                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+    public void addInvoiceToClient(Integer id, Integer invoiceId) {
         Client client = getClientByID(id);
-        List<Integer> ids = client.getLightMeterId();
-        Boolean done = ids.add(lightmeterid);
-        client.setLightMeterId(ids);
-    }
+        Invoice invoice = invoiceService.getInvoiceByID(invoiceId);
 
-    public void addInvoiceToClient(Integer id, Integer invoiceid) {
-        Invoice invoice = invoiceRepository.findById(invoiceid)
-                .orElseThrow(()-> new HttpClientErrorException(HttpStatus.NOT_FOUND));
-        Client client = getClientByID(id);
-        List<Integer> ids = client.getInvoiceId();
-        Boolean done = ids.add(invoiceid);
-        client.setInvoiceId(ids);
-        invoice.setClient(client);
-    }
-
-    public void addAddressToClient(Integer id, Integer addressId) {
-        Address address = addressRepository.findById(addressId)
-                .orElseThrow(()-> new HttpClientErrorException(HttpStatus.NOT_FOUND));
-        Client client = getClientByID(id);
-        client.setAddressid(addressId);
-        address.setClientId(id);
+        invoiceService.createInvoice(invoice);
+        List<Invoice> listInvoice = client.getInvoices();
+        listInvoice.add(invoice);
+        client.setInvoices(listInvoice);
+        editClient(client);
     }
 }

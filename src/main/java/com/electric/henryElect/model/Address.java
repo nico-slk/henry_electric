@@ -19,17 +19,15 @@ public class Address {
     private String street;
     private String number;
 
-//    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "lightMeter_id")
-    private Integer lightMeterId;
+//    private Integer lightMeterId;
 
 //    @OneToOne(targetEntity=LightMeter.class, fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 //    @JoinColumn(name = "light_meter")
 //    private LightMeter lightMeter;
 
 //    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id")
-    private Integer clientId;
+//    @JoinColumn(name = "client_id")
+//    private Integer clientId;
 
 //    @OneToOne(targetEntity=Client.class, fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 //    @JoinColumn(name = "client")

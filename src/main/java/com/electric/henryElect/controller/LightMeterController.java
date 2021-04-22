@@ -24,13 +24,6 @@ public class LightMeterController {
         return lightMeterService.getLightMeters();
     }
 
-    // Acá agregamos el ID del domicilio y a domicilio le seteamos el ID del medidor
-    @PostMapping("/{id}/address/{addressId}")
-    public String postAddressToLightMeter(@PathVariable Integer id,@PathVariable Integer addressId){
-        lightMeterService.addAddressToLightMeter(id, addressId);
-        return ("Domicilio con id " + addressId + " ha sido agregado en medidor con id " + id);
-    }
-
     @PostMapping
     public String addLightMeter(@RequestBody LightMeter medidor){
         LightMeter createLightMeter = lightMeterService.addLightMeter(medidor);

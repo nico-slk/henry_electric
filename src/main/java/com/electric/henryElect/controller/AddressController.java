@@ -5,6 +5,8 @@ import com.electric.henryElect.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/address")
 public class AddressController {
@@ -16,6 +18,11 @@ public class AddressController {
     @GetMapping("/{id}")
     public Address getAddress(@PathVariable Integer id){
         return addressService.getAddressByID(id);
+    }
+
+    @GetMapping
+    public List<Address> getAllAddress(){
+        return addressService.getAllAddress();
     }
 
     @PostMapping

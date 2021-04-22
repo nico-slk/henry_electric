@@ -24,10 +24,15 @@ public class ClientController {
         return clientService.getAllClients();
     }
 
-    @PostMapping("/{id}/invoice/{invoiceId}")
+    @PutMapping("/{id}/invoice/{invoiceId}")
     public void addInvoiceToClient(@PathVariable Integer id, @PathVariable Integer invoiceId){
         clientService.addInvoiceToClient(id, invoiceId);
     }
+
+//    @PostMapping("/invoice/{invoiceId}")
+//    public void addInvoiceToClient(@PathVariable Integer invoiceId){
+//        clientService.addInvoiceToClient(invoiceId);
+//    }
 
     @PostMapping
     public String postClient(@RequestBody Client fulano){

@@ -7,6 +7,7 @@ import com.electric.henryElect.repository.ClientRepository;
 import com.electric.henryElect.repository.InvoiceRepository;
 import com.electric.henryElect.repository.LightMeterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -19,6 +20,7 @@ public class ClientService {
 
     private ClientRepository clientRepository;
     private InvoiceService invoiceService;
+    private ConversionService conversionService;
 
     @Autowired
     public ClientService(ClientRepository clientRepository, InvoiceService invoiceService) {
@@ -76,6 +78,6 @@ public class ClientService {
         List<Invoice> listInvoice = client.getInvoices();
         listInvoice.add(invoice);
         client.setInvoices(listInvoice);
-        editClient(client);
+//        editClient(client);
     }
 }

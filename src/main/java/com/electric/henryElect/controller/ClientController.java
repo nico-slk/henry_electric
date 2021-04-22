@@ -29,6 +29,11 @@ public class ClientController {
         clientService.addInvoiceToClient(id, invoiceId);
     }
 
+//    @PostMapping("/invoice/{invoiceId}")
+//    public void addInvoiceToClient(@PathVariable Integer invoiceId){
+//        clientService.addInvoiceToClient(invoiceId);
+//    }
+
     @PostMapping
     public String postClient(@RequestBody Client fulano){
         Client client = clientService.addClient(fulano);

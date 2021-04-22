@@ -11,7 +11,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Client implements Serializable {
 
     @Id

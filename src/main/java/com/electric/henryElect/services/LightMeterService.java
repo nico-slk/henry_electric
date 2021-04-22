@@ -82,11 +82,11 @@ public class LightMeterService {
             newLightMeter.setTotalConsumption(lightMeter.getTotalConsumption());
         }
 
-        if(medidor.getAddressid() != null){
-            newLightMeter.setAddressid(medidor.getAddressid());
-        } else {
-            newLightMeter.setAddressid(lightMeter.getAddressid());
-        }
+//        if(medidor.getAddressid() != null){
+//            newLightMeter.setAddressid(medidor.getAddressid());
+//        } else {
+//            newLightMeter.setAddressid(lightMeter.getAddressid());
+//        }
 
         return lightMeterRepository.save(newLightMeter);
     }
@@ -97,7 +97,7 @@ public class LightMeterService {
     }
 
     @CircuitBreaker(name = "getConsumption",fallbackMethod = "fallback")
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 300000)
     public void getConsumption(){
 
         Double consumo = Math.random();
@@ -120,13 +120,5 @@ public class LightMeterService {
     private void fallback(final Throwable t) throws IOException, InterruptedException{
 //        log.error(t.getStackTrace().toString());
         System.out.println("NO SOS VOS, SOY YO");
-    }
-
-    public void addAddressToLightMeter(Integer id, Integer addressId) {
-        Address address = addressRepository.findById(addressId)
-                .orElseThrow(()-> new HttpClientErrorException(HttpStatus.NOT_FOUND));
-        LightMeter lightMeter = getLightMeter(id);
-        lightMeter.setAddressid(addressId);
-        address.setLightMeterId(id);
     }
 }

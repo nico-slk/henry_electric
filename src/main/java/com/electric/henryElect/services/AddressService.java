@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.List;
+
 @Service
 public class AddressService {
 
@@ -17,6 +19,10 @@ public class AddressService {
     public Address getAddressByID(Integer id) {
         return addressRepository.findById(id)
                 .orElseThrow(()-> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+    }
+
+    public List<Address> getAllAddress() {
+        return addressRepository.findAll();
     }
 
     public Address addAddress(Address direccion) {
@@ -38,18 +44,6 @@ public class AddressService {
             newAddress.setStreet(direccion.getStreet());
         } else {
             newAddress.setStreet(address.getStreet());
-        }
-
-        if(direccion.getLightMeterId() != null){
-            newAddress.setLightMeterId(direccion.getLightMeterId());
-        } else {
-            newAddress.setLightMeterId(address.getLightMeterId());
-        }
-
-        if(direccion.getClientId() != null){
-            newAddress.setClientId(direccion.getClientId());
-        } else {
-            newAddress.setClientId(address.getClientId());
         }
 
         return addressRepository.save(newAddress);

@@ -1,6 +1,8 @@
 package com.electric.henryElect.services;
 
+import com.electric.henryElect.model.Client;
 import com.electric.henryElect.model.Invoice;
+import com.electric.henryElect.repository.ClientRepository;
 import com.electric.henryElect.repository.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,13 +11,20 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class InvoiceService {
 
-    @Autowired
     private InvoiceRepository invoiceRepository;
+    private ClientRepository clientRepository;
+
+    @Autowired
+    public InvoiceService(InvoiceRepository invoiceRepository, ClientRepository clientRepository) {
+        this.invoiceRepository = invoiceRepository;
+        this.clientRepository = clientRepository;
+    }
 
     public Invoice getInvoiceByID(Integer id){
         return invoiceRepository.findById(id)
@@ -63,12 +72,6 @@ public class InvoiceService {
             newInvoice.setPay(factura.getPay());
         } else {
             newInvoice.setPay(invoice.getPay());
-        }
-
-        if(factura.getClient() != null){
-            newInvoice.setClient(factura.getClient());
-        } else {
-            newInvoice.setClient(invoice.getClient());
         }
 
         return invoiceRepository.save(newInvoice);

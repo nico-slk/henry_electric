@@ -18,7 +18,7 @@ public abstract class Person implements Serializable {
     private Integer id;
 
 //    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "client")
-    private Client client;
+//    @JoinColumn(name = "client")
+//    private Client client;
 
 }

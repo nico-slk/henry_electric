@@ -24,7 +24,7 @@ public class ClientController {
         return clientService.getAllClients();
     }
 
-    @PutMapping("/{id}/invoice/{invoiceId}")
+    @PostMapping("/{id}/invoice/{invoiceId}")
     public void addInvoiceToClient(@PathVariable Integer id, @PathVariable Integer invoiceId){
         clientService.addInvoiceToClient(id, invoiceId);
     }

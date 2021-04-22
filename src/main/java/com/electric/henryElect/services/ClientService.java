@@ -63,6 +63,12 @@ public class ClientService {
             newClient.setLastName(client.getLastName());
         }
 
+        if(fulano.getInvoices() != null){
+            newClient.setInvoices(fulano.getInvoices());
+        } else {
+            newClient.setInvoices(client.getInvoices());
+        }
+
         return clientRepository.save(newClient);
     }
 
@@ -78,6 +84,6 @@ public class ClientService {
         List<Invoice> listInvoice = client.getInvoices();
         listInvoice.add(invoice);
         client.setInvoices(listInvoice);
-//        editClient(client);
+        editClient(client);
     }
 }

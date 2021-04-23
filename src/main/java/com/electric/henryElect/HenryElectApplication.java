@@ -10,6 +10,7 @@ public class HenryElectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HenryElectApplication.class, args);
+
 	}
 
 }

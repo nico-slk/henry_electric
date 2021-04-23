@@ -1,5 +1,6 @@
 package com.electric.henryElect.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Client implements Serializable {
 
@@ -20,7 +22,12 @@ public class Client implements Serializable {
     private String name;
     private String lastName;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "invoices")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Invoice> invoices;
+
+    @OneToOne(targetEntity=Address.class, fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
 }

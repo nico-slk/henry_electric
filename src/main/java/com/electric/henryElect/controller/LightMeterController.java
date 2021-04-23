@@ -5,6 +5,7 @@ import com.electric.henryElect.services.LightMeterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,6 +23,11 @@ public class LightMeterController {
     @GetMapping
     public List<LightMeter> getAllLightMeter(){
         return lightMeterService.getLightMeters();
+    }
+
+    @PutMapping("/{lightmeterid}/addaddress/{addressid}")
+    public void addAddressToLightMeter(@PathVariable Integer lightmeterid, @PathVariable Integer addressid){
+        lightMeterService.addAddressToLightMeter(lightmeterid, addressid);
     }
 
     @PostMapping

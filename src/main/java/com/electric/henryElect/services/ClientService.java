@@ -2,31 +2,23 @@ package com.electric.henryElect.services;
 
 import com.electric.henryElect.model.Client;
 import com.electric.henryElect.model.Invoice;
-import com.electric.henryElect.repository.AddressRepository;
 import com.electric.henryElect.repository.ClientRepository;
-import com.electric.henryElect.repository.InvoiceRepository;
-import com.electric.henryElect.repository.LightMeterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
 public class ClientService {
 
-
-    private ClientRepository clientRepository;
-    private InvoiceService invoiceService;
-    private ConversionService conversionService;
-
     @Autowired
-    public ClientService(ClientRepository clientRepository, InvoiceService invoiceService) {
-        this.clientRepository = clientRepository;
-        this.invoiceService = invoiceService;
-    }
+    private ClientRepository clientRepository;
+
 
     public Client getClientByID(Integer id) {
         return clientRepository.findById(id)
@@ -76,14 +68,37 @@ public class ClientService {
         clientRepository.deleteById(id);
     }
 
-    public void addInvoiceToClient(Integer id, Integer invoiceId) {
-        Client client = getClientByID(id);
-        Invoice invoice = invoiceService.getInvoiceByID(invoiceId);
+    public List<Invoice> getUnpaidInvoices(Integer id) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(()-> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+        List<Invoice> invoicesList = client.getInvoices();
+        List<Invoice> unPaidList =  new ArrayList<>();
+        for(Invoice i: invoicesList){
+            if(!i.getPay() && unPaidList.size() < 10){
+                unPaidList.add(i);
+            }
+        }
+        return unPaidList;
+    }
 
-        invoiceService.createInvoice(invoice);
-        List<Invoice> listInvoice = client.getInvoices();
-        listInvoice.add(invoice);
-        client.setInvoices(listInvoice);
-        editClient(client);
+    public List<Client> getMostConsumer() {
+        List<Client> clients = getAllClients();
+        List<Invoice> invoiceList = new ArrayList<>();
+        for(Client c: clients){
+            List<Invoice> listaFacturas = c.getInvoices();
+            Integer ultimaFactura = listaFacturas.size() - 1;
+            invoiceList.add(listaFacturas.get(ultimaFactura));
+        }
+
+        invoiceList.sort(Comparator.comparing(Invoice::getTotal));
+
+        List<Client> moreConsumer = new ArrayList<>();
+
+        for (Integer i = 0; i < 9; i++) {
+            Client c = getClientByID(invoiceList.get(i).getId());
+            moreConsumer.add(c);
+        }
+
+        return moreConsumer;
     }
 }

@@ -1,6 +1,7 @@
 package com.electric.henryElect.controller;
 
 import com.electric.henryElect.model.Client;
+import com.electric.henryElect.model.Invoice;
 import com.electric.henryElect.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,15 +25,15 @@ public class ClientController {
         return clientService.getAllClients();
     }
 
-    @PostMapping("/{id}/invoice/{invoiceId}")
-    public void addInvoiceToClient(@PathVariable Integer id, @PathVariable Integer invoiceId){
-        clientService.addInvoiceToClient(id, invoiceId);
+    @GetMapping("/{id}/invoices/unpaid")
+    public List<Invoice> getUnpaidInvoices(@PathVariable Integer id){
+        return clientService.getUnpaidInvoices(id);
     }
 
-//    @PostMapping("/invoice/{invoiceId}")
-//    public void addInvoiceToClient(@PathVariable Integer invoiceId){
-//        clientService.addInvoiceToClient(invoiceId);
-//    }
+    @GetMapping("/mostconsumer")
+    public List<Client> getMostConsumer(){
+        return clientService.getMostConsumer();
+    }
 
     @PostMapping
     public String postClient(@RequestBody Client fulano){

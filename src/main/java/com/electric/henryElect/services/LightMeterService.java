@@ -1,9 +1,8 @@
 package com.electric.henryElect.services;
 
 import com.electric.henryElect.model.Address;
-import com.electric.henryElect.model.Invoice;
 import com.electric.henryElect.model.LightMeter;
-import com.electric.henryElect.repository.AddressRepository;
+import com.electric.henryElect.model.Invoice;
 import com.electric.henryElect.repository.LightMeterRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.extern.slf4j.Slf4j;
@@ -24,15 +23,13 @@ public class LightMeterService {
 
     private LightMeterRepository lightMeterRepository;
     private InvoiceService invoiceService;
-    private AddressRepository addressRepository;
+    private AddressService addressService;
 
     @Autowired
-    public LightMeterService(LightMeterRepository lightMeterRepository, InvoiceService invoiceService, AddressRepository addressRepository) {
+    public LightMeterService(LightMeterRepository lightMeterRepository, InvoiceService invoiceService) {
         this.lightMeterRepository = lightMeterRepository;
         this.invoiceService = invoiceService;
-        this.addressRepository = addressRepository;
     }
-
 
     public LightMeter getLightMeter(Integer id){
         return lightMeterRepository.findById(id)
@@ -46,6 +43,7 @@ public class LightMeterService {
     public LightMeter addLightMeter(LightMeter medidor){
         return lightMeterRepository.save(medidor);
     }
+
 
     public LightMeter editLightMeter(LightMeter medidor) {
         LightMeter lightMeter = lightMeterRepository.findById(medidor.getId())
@@ -82,11 +80,11 @@ public class LightMeterService {
             newLightMeter.setTotalConsumption(lightMeter.getTotalConsumption());
         }
 
-//        if(medidor.getAddressid() != null){
-//            newLightMeter.setAddressid(medidor.getAddressid());
-//        } else {
-//            newLightMeter.setAddressid(lightMeter.getAddressid());
-//        }
+        if(medidor.getAddress() != null){
+            newLightMeter.setAddress(medidor.getAddress());
+        } else {
+            newLightMeter.setAddress(lightMeter.getAddress());
+        }
 
         return lightMeterRepository.save(newLightMeter);
     }
@@ -103,9 +101,9 @@ public class LightMeterService {
         Double consumo = Math.random();
         Double acc = Math.random();
         consumo += acc;
-        Integer tarifa = 1;
-        LocalDate ahora = LocalDate.now();
-        LocalDateTime initialMeditionDate = ahora.atStartOfDay();
+        Double tarifa = 1.0;
+        LocalDateTime ahora = LocalDateTime.now();
+        LocalDateTime initialMeditionDate = ahora.toLocalDate().atStartOfDay();
 
         Invoice newInvoice = new Invoice();
 
@@ -118,7 +116,18 @@ public class LightMeterService {
 
     }
     private void fallback(final Throwable t) throws IOException, InterruptedException{
-//        log.error(t.getStackTrace().toString());
+        log.error(t.getStackTrace().toString());
         System.out.println("NO SOS VOS, SOY YO");
+    }
+
+
+    public void addAddressToLightMeter(Integer lightmeterid, Integer addressid) {
+
+        LightMeter lightMeter = lightMeterRepository.findById(lightmeterid)
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+
+        Address address = addressService.getAddressByID(addressid);
+        lightMeter.setAddress(address);
+        editLightMeter(lightMeter);
     }
 }

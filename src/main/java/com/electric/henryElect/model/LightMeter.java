@@ -21,5 +21,7 @@ public class LightMeter {
     private Double finalMedition; //Medición final
     private Double totalConsumption; //Consumo total en Kwh
 
-
+    @OneToOne(targetEntity=Address.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinColumn(name = "addressId")
+    private Address address;
 }
